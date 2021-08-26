@@ -5,17 +5,17 @@ import WarningSign from "./components/WarningSign";
 import MyBadge from "./components/MyBadge";
 import SingleBook from "./components/SingleBook";
 import BookList from "./components/BookList";
-import CommentArea from "./components/CommentArea";
+
+import FantasyBooks from "../src/data/fantasy.json";
 
 function App() {
   return (
     <div className="App">
       <WarningSign />
       <MyBadge variant="primary" text="Tarun" />
-      <SingleBook />
-      <CommentArea />
+      <SingleBook book={FantasyBooks[0]} />
 
-      <BookList />
+      <BookList books={FantasyBooks} />
     </div>
   );
 }

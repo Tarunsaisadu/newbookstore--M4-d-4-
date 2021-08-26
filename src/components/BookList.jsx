@@ -1,30 +1,50 @@
-import React, { Component } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import books from "../data/fantasy.json";
+import React from "react";
+import SingleBook from "./SingleBook";
+import { Container, Row, Col, Form } from "react-bootstrap";
 
-export default class BookList extends Component {
+class BookList extends React.Component {
+  state = {
+    searchQuery: "",
+  };
+
   render() {
     return (
       <Container>
-           <h2>Fantasy</h2>
-        <Row className="row-cols-sm-1 row-cols-md-2 row-cols-lg-4">
-       
-          {books.map((book) => (
-            <Col>
-              <Card >
-                <Card.Img variant="top" src= {book.img}/>
-                <Card.Body key={book.asin}>
-                  <Card.Title>{book.title}</Card.Title>
-                  <Card.Text>
-                   {book.category}
-                  </Card.Text>
-                 
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+        <Row>
+          <Col>
+            <Form>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Search</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Search"
+                  value={this.state.searchQuery}
+                  onChange={(e) =>
+                    this.setState({ searchQuery: e.target.value })
+                  }
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+        </Row>
+
+        <Row>
+          {this.props.books
+            .filter((b) =>
+              b.title.toLowerCase().includes(this.state.searchQuery)
+            )
+            .map((b) => (
+              <Col xs={3}>
+                <SingleBook book={b} />
+              </Col>
+            ))}
         </Row>
       </Container>
     );
   }
 }
+
+export default BookList;
